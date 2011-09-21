@@ -47,21 +47,22 @@ if !exists("javascript_ignore_javaScriptdoc")
 
   syntax region javaScriptDocComment      matchgroup=javaScriptComment start="/\*\*\s*"  end="\*/" contains=javaScriptDocTags,javaScriptCommentTodo,javaScriptCvsTag,@javaScriptHtml,@Spell fold
 
-  " tags containing a param
-  syntax match  javaScriptDocTags         contained "@\(augments\|base\|borrows\|class\|constructs\|default\|exception\|exports\|extends\|file\|member\|memberOf\|module\|name\|namespace\|optional\|requires\|title\|throws\|version\)\>" nextgroup=javaScriptDocParam skipwhite
-  " tags containing type and param
-  syntax match  javaScriptDocTags         contained "@\(argument\|param\|property\)\>" nextgroup=javaScriptDocType skipwhite
-  " tags containing type but no param
-  syntax match  javaScriptDocTags         contained "@\(type\|return\|returns\)\>" nextgroup=javaScriptDocTypeNoParam skipwhite
-  " tags containing references
-  syntax match  javaScriptDocTags         contained "@\(lends\|link\|see\)\>" nextgroup=javaScriptDocSeeTag skipwhite
-  " other tags (no extra syntax)
-  syntax match  javaScriptDocTags         contained "@\(access\|addon\|alias\|author\|beta\|constant\|constructor\|copyright\|deprecated\|description\|event\|example\|exec\|field\|fileOverview\|fileoverview\|function\|global\|ignore\|inner\|license\|overview\|private\|protected\|project\|public\|readonly\|since\|static\)\>"
+  " @sometag
+  syntax match  javaScriptDocTags         contained "@\(private\|protected\|constructor\|interface\|override\|inheritDoc\|noalias\|export\|const\|nosideeffects\)\>"
+  syntax match  javaScriptDocTags         contained "@\(typedef\|template\|externs\)\>"
+  " @sometag text
+  syntax match  javaScriptDocTags         contained "@\(author\|see\|fileoverview\|supported\|deprecated\|license\|preserve\)\>"
+  " @sometag type
+  syntax match  javaScriptDocTags         contained "@\(type\|extends\|implements\|lends\|this\|enum\)\>" nextgroup=javaScriptDocTypeNoParam skipwhite
+  " @sometag type description
+  syntax match  javaScriptDocTags         contained "@\(return\|define\)\>" nextgroup=javaScriptDocTypeNoParam skipwhite
+  " @param type name description
+  syntax match  javaScriptDocTags         contained "@param\>" nextgroup=javaScriptDocType skipwhite
 
   syntax region javaScriptDocType         start="{" end="}" oneline contained nextgroup=javaScriptDocParam skipwhite
-  syntax match  javaScriptDocType         contained "\%(#\|\"\|\w\|\.\|:\|\/\)\+" nextgroup=javaScriptDocParam skipwhite
+  syntax match  javaScriptDocType         contained "\%(#\|\"\|\w\|\.\|:\|\/\<\>\)\+" nextgroup=javaScriptDocParam skipwhite
   syntax region javaScriptDocTypeNoParam  start="{" end="}" oneline contained
-  syntax match  javaScriptDocTypeNoParam  contained "\%(#\|\"\|\w\|\.\|:\|\/\)\+"
+  syntax match  javaScriptDocTypeNoParam  contained "\%(\w\|\.\|{\|}\|<\|>\|,\|:\|?\|(\|)\||\|\[\|\]\|!\)\+"
   syntax match  javaScriptDocParam        contained "\%(#\|\"\|{\|}\|\w\|\.\|:\|\/\)\+"
   syntax region javaScriptDocSeeTag       contained matchgroup=javaScriptDocSeeTag start="{" end="}" contains=javaScriptDocTags
 
