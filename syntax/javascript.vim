@@ -86,10 +86,10 @@ syntax keyword javaScriptPrototype      prototype
 
 "" Programm Keywords
 syntax keyword javaScriptSource         import export require
-syntax keyword javaScriptType           const undefined var void yield
+syntax keyword javaScriptType           const var void yield
 syntax keyword javaScriptOperator       delete new in instanceof let typeof
 syntax keyword javaScriptBoolean        true false
-syntax keyword javaScriptNull           null
+syntax keyword javaScriptNull           undefined null
 syntax keyword javaScriptThis           this self that
 syntax keyword javaScriptArguments      arguments
 
