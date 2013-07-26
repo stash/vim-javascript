@@ -47,23 +47,22 @@ if !exists("javascript_ignore_javaScriptdoc")
 
   syntax region javaScriptDocComment      matchgroup=javaScriptComment start="/\*\*\s*"  end="\*/" contains=javaScriptDocTags,javaScriptCommentTodo,javaScriptCvsTag,@javaScriptHtml,@Spell fold
 
-  " @sometag
-  syntax match  javaScriptDocTags         contained "@\(private\|protected\|constructor\|interface\|override\|inheritDoc\|noalias\|export\|const\|nosideeffects\)\>"
-  syntax match  javaScriptDocTags         contained "@\(typedef\|template\|externs\)\>"
-  " @sometag text
-  syntax match  javaScriptDocTags         contained "@\(author\|see\|fileoverview\|supported\|deprecated\|license\|preserve\)\>"
-  " @sometag type
-  syntax match  javaScriptDocTags         contained "@\(type\|extends\|implements\|lends\|this\|enum\)\>" nextgroup=javaScriptDocTypeNoParam skipwhite
-  " @sometag type description
-  syntax match  javaScriptDocTags         contained "@\(return\|define\)\>" nextgroup=javaScriptDocTypeNoParam skipwhite
-  " @param type name description
-  syntax match  javaScriptDocTags         contained "@param\>" nextgroup=javaScriptDocType skipwhite
+  " tags containing a param
+  syntax match  javaScriptDocTags         contained "@\(alias\|augments\|borrows\|class\|constructs\|default\|defaultvalue\|emits\|exception\|exports\|extends\|file\|fires\|kind\|listens\|member\|memberOf\|mixes\|module\|name\|namespace\|requires\|throws\|var\|variation\|version\)\>" nextgroup=javaScriptDocParam skipwhite
+  " tags containing type and param
+  syntax match  javaScriptDocTags         contained "@\(arg\|argument\|param\|property\)\>" nextgroup=javaScriptDocType skipwhite
+  " tags containing type but no param
+  syntax match  javaScriptDocTags         contained "@\(callback\|enum\|external\|this\|type\|typedef\|return\|returns\)\>" nextgroup=javaScriptDocTypeNoParam skipwhite
+  " tags containing references
+  syntax match  javaScriptDocTags         contained "@\(lends\|see\)\>" nextgroup=javaScriptDocSeeTag skipwhite
+  " other tags (no extra syntax)
+  syntax match  javaScriptDocTags         contained "@\(abstract\|access\|author\|classdesc\|constant\|const\|constructor\|copyright\|deprecated\|desc\|description\|event\|example\|fileOverview\|function\|global\|ignore\|inner\|instance\|license\|method\|mixin\|overview\|private\|protected\|public\|readonly\|since\|static\|todo\|summary\|undocumented\|virtual\)\>"
 
   syntax region javaScriptDocType         start="{" end="}" oneline contained nextgroup=javaScriptDocParam skipwhite
-  syntax match  javaScriptDocType         contained "\%(#\|\"\|\w\|\.\|:\|\/\<\>\)\+" nextgroup=javaScriptDocParam skipwhite
+  syntax match  javaScriptDocType         contained "\%(#\|\"\|\w\|\.\|:\|\/\)\+" nextgroup=javaScriptDocParam skipwhite
   syntax region javaScriptDocTypeNoParam  start="{" end="}" oneline contained
   syntax match  javaScriptDocTypeNoParam  contained "\%(\w\|\.\|{\|}\|<\|>\|,\|:\|?\|(\|)\||\|\[\|\]\|!\)\+"
-  syntax match  javaScriptDocParam        contained "\%(#\|\"\|{\|}\|\w\|\.\|:\|\/\)\+"
+  syntax match  javaScriptDocParam        contained "\%(#\|\"\|{\|}\|\[\|\]\|\w\|\.\|=\|:\|\/\)\+"
   syntax region javaScriptDocSeeTag       contained matchgroup=javaScriptDocSeeTag start="{" end="}" contains=javaScriptDocTags
 
   syntax case match
@@ -170,7 +169,7 @@ syntax match  javaScriptUseStrict +^\s*\("use strict"\|'use strict'\);\?\s*$+ di
 syntax cluster javaScriptAll       contains=javaScriptComment,javaScriptLineComment,javaScriptDocComment,javaScriptStringD,javaScriptStringS,javaScriptRegexpString,javaScriptNumber,javaScriptFloat,javaScriptLabel,javaScriptSource,javaScriptThis,javaScriptType,javaScriptOperator,javaScriptBoolean,javaScriptNull,javaScriptFunction,javaScriptConditional,javaScriptRepeat,javaScriptBranch,javaScriptStatement,javaScriptGlobalObjects,javaScriptExceptions,javaScriptFutureKeys,javaScriptDomErrNo,javaScriptDomNodeConsts,javaScriptHtmlEvents,javaScriptDotNotation,javaScriptNodeGlobalObjects,javaScriptNodeCoreObjects,javaScriptNodeEvents,javaScriptCallback,javaScriptUseStrict,javaScriptArguments
 syntax region  javaScriptBracket   matchgroup=javaScriptBracket transparent start="\[" end="\]" contains=@javaScriptAll,javaScriptParensErrB,javaScriptParensErrC,javaScriptBracket,javaScriptParen,javaScriptBlock,@htmlPreproc
 syntax region  javaScriptParen     matchgroup=javaScriptParen   transparent start="("  end=")"  contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrC,javaScriptParen,javaScriptBracket,javaScriptBlock,@htmlPreproc
-syntax region  javaScriptBlock     matchgroup=javaScriptBlock   transparent start="{"  end="}"  contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock,@htmlPreproc 
+syntax region  javaScriptBlock     matchgroup=javaScriptBlock   transparent start="{"  end="}"  contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock,@htmlPreproc
 
 "" catch errors caused by wrong parenthesis
 syntax match   javaScriptParensError    ")\|}\|\]"
